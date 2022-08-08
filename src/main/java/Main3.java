@@ -9,17 +9,18 @@ public class Main3 {
             ai[i] =scanner.nextInt();
         }
 
-        int maxAdd=0;
-        int iMaxAdd=0;
-        int maxDel=0;
-        int iMaxDel=0;
+        int minAdd=ai[0];
+        int iMinAdd=0;
+        int maxDel=ai[1];
+        int iMaxDel=1;
 
         for (int i = 0; i <n; i++) {
-            if (i%2==0)
-                if (ai[i]>maxAdd) {
-                    maxAdd = ai[i];
-                    iMaxAdd =i;
+            if (i%2==0) {
+                if (ai[i] < minAdd) {
+                    minAdd = ai[i];
+                    iMinAdd = i;
                 }
+            }
             else
             if (ai[i]>maxDel) {
                 maxDel = ai[i];
@@ -29,8 +30,8 @@ public class Main3 {
         }
 
         int tmp;
-        tmp=ai[iMaxAdd];
-        ai[iMaxAdd] = ai[maxDel];
+        tmp=ai[iMinAdd];
+        ai[iMinAdd] = ai[iMaxDel];
         ai[iMaxDel]=tmp;
 
         int sum=0;

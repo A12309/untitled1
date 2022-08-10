@@ -22,7 +22,7 @@ public class Main8 {
 
         for (int i = 0; i < m; i++) {
             String[] splitNeedAdress = needAdreesPatterns.get(i).split(" ");
-            String regex = "^" + splitNeedAdress[0] + "+\\w+" +splitNeedAdress[1] + "$";
+            String regex = "^" + splitNeedAdress[0] + "+\\w*" +splitNeedAdress[1] + "$";
             Pattern pattern = Pattern.compile(regex);
             int count=0;
             for (int j = 0; j < n; j++) {

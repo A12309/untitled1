@@ -1,31 +1,80 @@
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Main5 {
     public static void main(String[] args) {
+        class Query {
+            private int k;
+            private String prefix;
+
+            public Query(int k, String prefix) {
+                this.k = k;
+                this.prefix = prefix;
+            }
+
+            public int getK() {
+                return k;
+            }
+
+            public String getPrefix() {
+                return prefix;
+            }
+        }
+        class Surname implements Comparable<Surname> {
+            private int number;
+            private String surname;
+
+            public int getNumber() {
+                return number;
+            }
+
+            public String getSurname() {
+                return surname;
+            }
+
+            public Surname(int number, String surname) {
+                this.number = number;
+                this.surname = surname;
+            }
+
+            @Override
+            public int compareTo(Surname o) {
+               return this.surname.compareTo(o.getSurname());
+            }
+        }
         List<Character> alfathit = Arrays.asList('a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z');
         Scanner scanner = new Scanner(System.in);
         int n = scanner.nextInt();
         int q = scanner.nextInt();
         scanner.nextLine();
 
-        String[] surnames = new String[n];
+        ArrayList<Surname> surnames = new ArrayList<>();
         for (int i = 0; i < n; i++) {
-            surnames[i] = scanner.nextLine();
+            surnames.add(new Surname(i, scanner.nextLine()));
         }
 
 
-        ArrayList<Map<Integer, String>> queryes = new ArrayList<>();
+        ArrayList<Query> queryes = new ArrayList<>();
         for (int i = 0; i < q; i++) {
-            HashMap<Integer, String> integerStringHashMap = new HashMap<>();
-            integerStringHashMap.put(scanner.nextInt(), scanner.nextLine());
-            queryes.add(integerStringHashMap);
+
+            queryes.add(new Query(scanner.nextInt(), scanner.nextLine()));
         }
 
+
         for (int i = 0; i < q; i++) {
+            Query query = queryes.get(i);
+            String regex = "^" + query.getPrefix() + "\\w+";
+            Pattern pattern = Pattern.compile(regex);
+            ArrayList<Surname> matchSurnames = new ArrayList<>();
             for (int j = 0; j < n; j++) {
-                Map<Integer, String> integerStringMap = queryes.get(i);
-
+                Surname surname = surnames.get(j);
+                Matcher matcher = pattern.matcher(surname.getSurname());
+                if (matcher.matches())
+                    matchSurnames.add(surname);
             }
+            Collections.sort(matchSurnames);
+            System.out.println(matchSurnames.get(query.getK()).getNumber());
         }
 
     }

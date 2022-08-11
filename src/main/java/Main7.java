@@ -38,32 +38,32 @@ public class Main7 {
             segments.add(segment);
         }
 
-        extracted(alphabet);
-
-
+        for (Segment segment : segments) {
+            calculateCount(segment.getFirstNumber(), segment.getSecondNumber());
+        }
     }
 
-    private static void extracted(int l, int r) {
-        int i=l-1;
+    private static void calculateCount(int l, int r) {
+        int start=l-1;
         char[] charactersSupermarket = supermarket.toCharArray();
+        int count=0;
         for (Character character : alphabet) {
-            int start =i;
-            int count=0;
+            int i=start;
             int iter=0;
-            for (int j= 0; j < ; j++) {
-
-            }
-            while (start) {
+            for (int j= 0; j <= r-l; j++) {
                 if (character.equals(charactersSupermarket[i])) {
                     count+=iter;
+                    iter=0;
                     start=i;
                 }
                 i++;
+                iter++;
                 if (i>(r-1))
                     i=l-1;
+
             }
 
-
         }
+        System.out.println(count);
     }
 }

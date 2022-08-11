@@ -17,6 +17,7 @@ public class Main4 {
                 variablsLevel.add(copyMap(variablsLevel.get(i - 1)));
             }
             if ((string.equals("}")) && (i > 0)) {
+                variablsLevel.remove(i);
                 i--;
             }
             if (string.contains("=")) {

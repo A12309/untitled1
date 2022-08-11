@@ -1,23 +1,26 @@
 import java.util.*;
+import java.util.stream.Stream;
 
 public class Main2 {
 
     public static void main(String[] args) {
       Scanner scanner = new Scanner(System.in);
-      int countOfYears = scanner.nextInt();
+      int yearCount = scanner.nextInt();
       scanner.nextLine();
 
-      Set<String>[] teams = new Set[countOfYears];
-        for (int i = 0; i < countOfYears; i++) {
+      Set<String>[] teams = new Set[yearCount];
+        for (int i = 0; i < yearCount; i++) {
             String teamString = scanner.nextLine();
             String[] membersOfTeamArray = teamString.split(" ");
-            List<String> membersOfTeamList = Arrays.stream(membersOfTeamArray).toList();
+            Stream<String> streamMembersOfTeam = Arrays.stream(membersOfTeamArray);
+            List<String> membersOfTeamList = streamMembersOfTeam.toList();
             Set<String> teamSet = new HashSet<>();
             teamSet.addAll(membersOfTeamList);
             teams[i]=teamSet;
 
         }
-        System.out.println(findMaxEquals(teams));
+        int maxEquals = findMaxEquals(teams);
+        System.out.println(maxEquals);
     }
     private static int findMaxEquals(Set<String>[] teams) {
 

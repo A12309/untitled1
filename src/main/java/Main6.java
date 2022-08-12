@@ -1,9 +1,7 @@
-import javafx.util.Pair;
-
 import java.util.*;
 
 public class Main6 {
-    private static Set<Lift> dontMoveLifts = new HashSet<>();
+
     private static ArrayList<Integer> tracks = new ArrayList<>();
 
     public static class Lift {
@@ -11,7 +9,6 @@ public class Main6 {
         private int f;
         private int i;
         private ArrayList<Lift> liftsInFloor = new ArrayList<>();
-       // private Pair<Integer, Lift> liftsInFloor = new Pair<>();
 
 
         public void setI(int i) {
@@ -23,20 +20,20 @@ public class Main6 {
             this.f = f;
         }
 
-        public void findLifts(int i, ArrayList<Lift> lifts) {
+        public void findLifts(int i, ArrayList<Lift> lifts, HashSet<Lift> dontMoveLifts) {
             i++;
             boolean isHighestFloor = true;
             for (Lift lift : lifts) {
-                if (!lift.equals(this) && !liftsInFloor.contains(lift) && !dontMoveLifts.contains(lift)) {
+                if (!lift.equals(this) && !dontMoveLifts.contains(lift)) {
                     if (lift.getS() == f) {
+                        System.out.println(lift.getS() + " " + lift.getF() + " " + i);
                         isHighestFloor = false;
                         lift.setI(i);
                         liftsInFloor.add(lift);
-                     //   liftsInFloor.put(i, lift);
                         if (lift.getF() == lift.getS()) {
                             dontMoveLifts.add(lift);
                         }
-                        lift.findLifts(i, lifts);
+                        lift.findLifts(i, lifts, new HashSet<>(dontMoveLifts));
 
                     }
                 }
@@ -65,7 +62,8 @@ public class Main6 {
             scanner.nextLine();
         }
         Lift rootLift = new Lift(-1, 0);
-        rootLift.findLifts(0, lifts);
+
+        rootLift.findLifts(0, lifts, new HashSet<Lift>());
         Collections.sort(tracks);
         System.out.println(tracks.get(tracks.size() - 1));
     }

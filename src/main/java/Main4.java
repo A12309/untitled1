@@ -1,29 +1,29 @@
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 public class Main4 {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        String string;
-        Integer i=0;
-        ArrayList<Map<String, Integer>> variablsLevel = new ArrayList<>();
-        variablsLevel.add(new HashMap<>());
+        String stringLine;
+        int i=0;
+        ArrayList<Map<String, Integer>> levels = new ArrayList<>();
+        levels.add(new HashMap<>());
         while (true) {
-            string = scanner.nextLine();
-            if ((string.equals("{"))) {
+            stringLine = scanner.nextLine();
+            if ((stringLine.equals("{"))) {
                 i++;
-                variablsLevel.add(copyMap(variablsLevel.get(i - 1)));
+                levels.add(copyMap(levels.get(i - 1)));
+
             }
-            if ((string.equals("}")) && (i > 0)) {
-                variablsLevel.remove(i);
-                i--;
+            if ((stringLine.equals("}")) && (i >= 0)) {
+                levels.remove(i);
+                if (i==0) {
+                    levels.add(new HashMap<>());
+                } else
+                    i--;
             }
-            if (string.contains("=")) {
-                String[] splitStrings = string.split("=");
-                Map map = variablsLevel.get(i);
-                map.put(splitStrings[0], findZnach(splitStrings[1], variablsLevel, i));
+            if (stringLine.contains("=")) {
+                saveValue(stringLine, levels, i);
+
             }
         }
 
@@ -38,15 +38,22 @@ public class Main4 {
         return objectObjectHashMap;
     }
 
-    private static Integer findZnach(String splitString, ArrayList<Map<String, Integer>> variablsLevel, Integer i) {
+    private static void saveValue(String stringLine, ArrayList<Map<String, Integer>> variablsLevel, Integer i) {
+        String[] splitStrings = stringLine.split("=");
+        Map<String, Integer> level = variablsLevel.get(i);
+        Integer value=0;
         try {
-            int s = Integer.parseInt(splitString);
-            return s;
+            value = Integer.parseInt(splitStrings[1]);
+            level.put(splitStrings[0], value);
         } catch (NumberFormatException e) {
-            Integer result = variablsLevel.get(i).get(splitString);
-            System.out.println(result);
-            return result;
+            value = level.get(splitStrings[1]);
+            if (value==null) {
+                value=0;
+                level.put(splitStrings[1], value);
+            }
+            System.out.println(value);
         }
+        level.put(splitStrings[0], value);
     }
 
 

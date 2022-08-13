@@ -7,7 +7,7 @@ public class Main4 {
         int i=0;
         ArrayList<Map<String, Integer>> levels = new ArrayList<>();
         levels.add(new HashMap<>());
-        while (true) {
+        while (scanner.hasNext()) {
             stringLine = scanner.nextLine();
             if ((stringLine.equals("{"))) {
                 i++;

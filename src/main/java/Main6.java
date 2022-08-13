@@ -26,7 +26,6 @@ public class Main6 {
             for (Lift lift : lifts) {
                 if (!lift.equals(this) && !dontMoveLifts.contains(lift)) {
                     if (lift.getS() == f) {
-                        System.out.println(lift.getS() + " " + lift.getF() + " " + i);
                         isHighestFloor = false;
                         lift.setI(i);
                         liftsInFloor.add(lift);
